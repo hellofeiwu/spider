@@ -1,24 +1,21 @@
 #include <QCoreApplication>
-#include <QtNetwork>
+#include "HttpAccess.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QUrl url("http://www.baidu.com");
-    QNetworkAccessManager manager;
-    QNetworkRequest request(url);
-    QNetworkReply* reply = manager.get(request);
-    QObject::connect(reply, &QNetworkReply::finished, [&](){
-        if(reply->error()==QNetworkReply::NoError){
-            QByteArray data = reply->readAll();
-            QString htmlContent = QString::fromUtf8(data);
-            //qDebug()<<htmlContent;
-        }else{
-            qDebug()<<reply->error();
-        }
+    QUrl url("www.baidu.com");
+    HttpAccess httpAccess;
 
-        reply->deleteLater();
+    httpAccess.get(url);
+
+    QObject::connect(&httpAccess, &HttpAccess::finished, [](const QByteArray &data){
+        qDebug()<<data;
+    });
+
+    QObject::connect(&httpAccess, &HttpAccess::error, [](const QString &errorString){
+        qDebug()<<errorString;
     });
 
     return a.exec();
