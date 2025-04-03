@@ -8,7 +8,7 @@ QVector<QString> ReTool::match(const QString &data)
     QRegularExpressionMatchIterator i = regex.globalMatch(data);
     while(i.hasNext()){
         QRegularExpressionMatch match = i.next();
-        res.append(match.captured(1));
+        res.append(match.captured(2)+ " : " + match.captured(1));
     }
     return res;
 }
