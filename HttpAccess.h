@@ -21,7 +21,7 @@ public:
 
 
 signals:
-    void finished(const QByteArray &data); // 这个是qt内部的一个已经存在的方法不用写实现，只要在这里声明一下，别的地方就可以用了
+    void finished(const QString &data); // 这个是qt内部的一个已经存在的方法不用写实现，只要在这里声明一下，别的地方就可以用了
     void error(const QString &errorString); // 和上面的方法是一样的机制
 private:
     QNetworkAccessManager _manager;

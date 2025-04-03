@@ -9,7 +9,7 @@ void HttpAccess::get(QUrl &url){
     QNetworkReply* reply = _manager.get(request);
     QObject::connect(reply, &QNetworkReply::finished, [this, reply](){
         if(reply->error()==QNetworkReply::NoError){
-            QByteArray data = reply->readAll();
+            QString data = QString::fromUtf8(reply->readAll());
             emit finished(data); // emit 也是qt自己的一个机制 这里就是调用HttpAccess类里声明的finished方法
         }else{
             emit error(reply->errorString());
